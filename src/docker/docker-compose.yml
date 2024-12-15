@@ -6,8 +6,9 @@ services:
        POSTGRES_USER: postgres
        POSTGRES_PASSWORD: secret
        POSTGRES_DB: elearning_db
-       PGDATA: /data/postgres
+       PGDATA: /data/postgres      
     volumes:
+       - ./postgres/pg_hba.conf:/data/postgres/pg_hba.conf
        - postgres:/data/postgres
     ports:
        - "5432:5432"
