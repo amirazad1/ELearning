@@ -1,0 +1,5 @@
+### GET request to example server
+GET http://localhost:5005/api/v1/health
+
+Accept: application/json
+

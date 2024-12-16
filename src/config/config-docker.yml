@@ -1,0 +1,27 @@
+server:
+  Port: 5005
+  RunMode: debug
+logger:
+  filePath: ../logs/logs/log
+  Encoding: json
+  level: debug
+cors:
+  allowOrigins: "*"
+postgres:
+  host: postgres_container
+  port: 5432
+  user: postgres
+  password: secret
+  dbName: learning_db
+  sslMode: false
+redis:
+  host: redis_container
+  port: 6379
+  password: secret
+  db: 0
+  minIdleConnections: 100
+  poolSize: 5000
+  poolTimeout: 240
+jwt:
+  secret: mySecretKey
+  
