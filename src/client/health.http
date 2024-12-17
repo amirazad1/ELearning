@@ -1,5 +1,45 @@
-### GET request to example server
-GET http://localhost:5005/api/v1/health
-
+### GET request with header and queries
+GET http://localhost:5005/api/v1/health?id=1&name=rima&id=6
 Accept: application/json
+my-header: amir header
+
+### GET request with uri params
+GET http://localhost:5005/api/v1/health/12/amir
+Accept: application/json
+
+### POST request with body
+POST http://localhost:5005/api/v1/health/
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name":"amir",
+  "age":12,
+  "mobile": "09133958570"
+}
+
+### POST request with form
+POST http://localhost:5005/api/v1/health/form
+Content-Type: application/x-www-form-urlencoded
+
+name = ali &
+age = 20 &
+mobile=09398012348
+
+### POST request with file
+POST http://localhost:5005/api/v1/health/file
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="file_for_upload_test.txt"
+
+< /home/amirazad/Projects/file_for_upload_test.txt
+--WebAppBoundary--
+
+
+
+
+
+
+
 
