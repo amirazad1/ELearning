@@ -8,6 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/validator/v10"
+	"log"
 )
 
 func InitServer() {
@@ -27,5 +28,8 @@ func InitServer() {
 		routers.Health(health)
 	}
 
-	r.Run(fmt.Sprintf(":%s", cfg.Server.Port))
+	err := r.Run(fmt.Sprintf(":%s", cfg.Server.Port))
+	if err != nil {
+		log.Fatal(err)
+	}
 }
