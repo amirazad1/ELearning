@@ -2,6 +2,7 @@ package api
 
 import (
 	"fmt"
+	"github.com/amirazad1/ELearning/api/middlewares"
 	"github.com/amirazad1/ELearning/api/routers"
 	"github.com/amirazad1/ELearning/api/validations"
 	"github.com/amirazad1/ELearning/config"
@@ -20,7 +21,7 @@ func InitServer() {
 		_ = val.RegisterValidation("mobile", validations.IranianMobileNumberValidation)
 	}
 
-	r.Use(gin.Logger(), gin.Recovery())
+	r.Use(gin.Logger(), gin.Recovery(), middlewares.LimitByRequest())
 
 	v1 := r.Group("/api/v1")
 	{
