@@ -14,8 +14,8 @@ Content-Type: application/json
 
 {
   "name":"amir",
-  "age":12,
-  "mobile": "09133958570"
+  "age":10,
+  "mobile": "09133958070"
 }
 
 ### POST request with form

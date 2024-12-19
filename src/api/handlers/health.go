@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"github.com/amirazad1/ELearning/api/helper"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -24,22 +25,22 @@ func (h *HealthHandler) Health(c *gin.Context) {
 	ids := c.QueryArray("id")
 	name := c.Query("name")
 
-	c.JSON(http.StatusOK, gin.H{
+	c.JSON(http.StatusOK, helper.GenerateBaseResponse(gin.H{
 		"message":   "working!",
 		"my header": header,
 		"ids":       ids,
 		"name":      name,
-	})
+	}, true, 0))
 }
 
 func (h *HealthHandler) HealthWithParam(c *gin.Context) {
 	id := c.Param("id")
 	name := c.Param("name")
 
-	c.JSON(http.StatusOK, gin.H{
+	c.JSON(http.StatusOK, helper.GenerateBaseResponse(gin.H{
 		"id":   id,
 		"name": name,
-	})
+	}, true, 0))
 }
 
 func (h *HealthHandler) HealthWithBody(c *gin.Context) {
@@ -47,15 +48,12 @@ func (h *HealthHandler) HealthWithBody(c *gin.Context) {
 	err := c.ShouldBindBodyWithJSON(person)
 
 	if err != nil {
-		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"error": err.Error(),
-		})
+		c.AbortWithStatusJSON(http.StatusBadRequest,
+			helper.GenerateBaseResponseWithValidationError(person, false, helper.ValidationError, err))
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{
-		"person": person,
-	})
+	c.JSON(http.StatusOK, helper.GenerateBaseResponse(person, true, 0))
 }
 
 func (h *HealthHandler) HealthWithForm(c *gin.Context) {
@@ -63,30 +61,20 @@ func (h *HealthHandler) HealthWithForm(c *gin.Context) {
 	err := c.ShouldBind(person)
 
 	if err != nil {
-		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"error": err.Error(),
-		})
+		c.AbortWithStatusJSON(http.StatusBadRequest,
+			helper.GenerateBaseResponseWithValidationError(person, false, helper.ValidationError, err))
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{
-		"person": person,
-	})
+	c.JSON(http.StatusOK, helper.GenerateBaseResponse(person, true, 0))
 }
 
 func (h *HealthHandler) HealthWithFile(c *gin.Context) {
 	file, _ := c.FormFile("file")
 	err := c.SaveUploadedFile(file, "uploads/file.txt")
 
-	if err != nil {
-		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"error": err.Error(),
-		})
-		return
-	}
+	c.AbortWithStatusJSON(http.StatusBadRequest,
+		helper.GenerateBaseResponseWithValidationError(file, false, helper.ValidationError, err))
 
-	c.JSON(http.StatusOK, gin.H{
-		"file": file.Filename,
-		"size": file.Size,
-	})
+	c.JSON(http.StatusOK, helper.GenerateBaseResponse(file, true, 0))
 }
