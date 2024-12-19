@@ -2,8 +2,10 @@ package main
 
 import (
 	"github.com/amirazad1/ELearning/api"
+	"github.com/amirazad1/ELearning/config"
 )
 
 func main() {
-	api.InitServer()
+	cfg := config.GetConfig()
+	api.InitServer(cfg)
 }

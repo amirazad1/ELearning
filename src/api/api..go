@@ -12,27 +12,34 @@ import (
 	"log"
 )
 
-func InitServer() {
-	cfg := config.GetConfig()
+func InitServer(cfg *config.Config) {
 	r := gin.New()
 
-	val, ok := binding.Validator.Engine().(*validator.Validate)
-	if ok {
-		_ = val.RegisterValidation("mobile", validation.IranianMobileNumberValidator)
-		_ = val.RegisterValidation("password", validation.PasswordValidator)
-	}
+	RegisterValidators()
 
 	r.Use(middleware.Cors(cfg))
 	r.Use(gin.Logger(), gin.Recovery(), middleware.LimitByRequest())
 
+	RegisterRoutes(r)
+
+	err := r.Run(fmt.Sprintf(":%s", cfg.Server.Port))
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+func RegisterRoutes(r *gin.Engine) {
 	v1 := r.Group("/api/v1")
 	{
 		health := v1.Group("/health")
 		routers.Health(health)
 	}
+}
 
-	err := r.Run(fmt.Sprintf(":%s", cfg.Server.Port))
-	if err != nil {
-		log.Fatal(err)
+func RegisterValidators() {
+	val, ok := binding.Validator.Engine().(*validator.Validate)
+	if ok {
+		_ = val.RegisterValidation("mobile", validation.IranianMobileNumberValidator)
+		_ = val.RegisterValidation("password", validation.PasswordValidator)
 	}
 }
