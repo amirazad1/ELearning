@@ -8,11 +8,11 @@ logger:
 cors:
   allowOrigins: "*"
 postgres:
-  host: postgres_container
+  host: localhost
   port: 5432
   user: postgres
   password: secret
-  dbName: learning_db
+  dbName: elearning_db
   sslMode: disable
   maxIdleConns: 15
   maxOpenConns: 100
@@ -20,7 +20,7 @@ postgres:
 redis:
   host: localhost
   port: 6379
-  password: password
+  password: secret
   db: 0
   dialTimeout: 5
   readTimeout: 5
