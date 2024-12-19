@@ -15,13 +15,17 @@ postgres:
   dbName: learning_db
   sslMode: false
 redis:
-  host: redis_container
+  host: localhost
   port: 6379
-  password: secret
+  password: password
   db: 0
-  minIdleConnections: 100
-  poolSize: 5000
-  poolTimeout: 240
+  dialTimeout: 5
+  readTimeout: 5
+  writeTimeout: 5
+  poolSize: 10
+  poolTimeout: 15
+  idleTimeout: 500
+  idleCheckFrequency: 500
 password:
   includeChars: true
   includeDigits: true
