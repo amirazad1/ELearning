@@ -1,4 +1,4 @@
-package middlewares
+package middleware
 
 import (
 	"github.com/amirazad1/ELearning/config"

@@ -2,7 +2,7 @@ package api
 
 import (
 	"fmt"
-	"github.com/amirazad1/ELearning/api/middlewares"
+	"github.com/amirazad1/ELearning/api/middleware"
 	"github.com/amirazad1/ELearning/api/routers"
 	"github.com/amirazad1/ELearning/api/validation"
 	"github.com/amirazad1/ELearning/config"
@@ -22,7 +22,8 @@ func InitServer() {
 		_ = val.RegisterValidation("password", validation.PasswordValidator)
 	}
 
-	r.Use(gin.Logger(), gin.Recovery(), middlewares.LimitByRequest())
+	r.Use(middleware.Cors(cfg))
+	r.Use(gin.Logger(), gin.Recovery(), middleware.LimitByRequest())
 
 	v1 := r.Group("/api/v1")
 	{
