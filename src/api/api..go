@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/amirazad1/ELearning/api/middlewares"
 	"github.com/amirazad1/ELearning/api/routers"
-	"github.com/amirazad1/ELearning/api/validations"
+	"github.com/amirazad1/ELearning/api/validation"
 	"github.com/amirazad1/ELearning/config"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
@@ -18,7 +18,8 @@ func InitServer() {
 
 	val, ok := binding.Validator.Engine().(*validator.Validate)
 	if ok {
-		_ = val.RegisterValidation("mobile", validations.IranianMobileNumberValidation)
+		_ = val.RegisterValidation("mobile", validation.IranianMobileNumberValidator)
+		_ = val.RegisterValidation("password", validation.PasswordValidator)
 	}
 
 	r.Use(gin.Logger(), gin.Recovery(), middlewares.LimitByRequest())
