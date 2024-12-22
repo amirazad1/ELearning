@@ -2,7 +2,7 @@ server:
   Port: 5005
   RunMode: debug
 logger:
-  filePath: /app/logs/
+  filePath: ./logs/
   encoding: json
   level: debug
   logger: zap

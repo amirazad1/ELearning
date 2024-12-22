@@ -52,11 +52,11 @@ func (l *zapLogger) Init() {
 			Compress:   true,
 		})
 
-		config := zap.NewProductionEncoderConfig()
-		config.EncodeTime = zapcore.ISO8601TimeEncoder
+		zapConfig := zap.NewProductionEncoderConfig()
+		zapConfig.EncodeTime = zapcore.ISO8601TimeEncoder
 
 		core := zapcore.NewCore(
-			zapcore.NewJSONEncoder(config),
+			zapcore.NewJSONEncoder(zapConfig),
 			w,
 			l.getLogLevel(),
 		)
