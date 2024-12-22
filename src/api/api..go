@@ -7,12 +7,12 @@ import (
 	"github.com/amirazad1/ELearning/api/validation"
 	"github.com/amirazad1/ELearning/config"
 	"github.com/amirazad1/ELearning/docs"
+	"github.com/amirazad1/ELearning/pkg/logging"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/validator/v10"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
-	"log"
 )
 
 func InitServer(cfg *config.Config) {
@@ -26,9 +26,11 @@ func InitServer(cfg *config.Config) {
 	RegisterRoutes(r)
 	RegisterSwagger(r, cfg)
 
+	logger := logging.NewLogger(cfg)
+	logger.Info(logging.General, logging.Startup, "Started", nil)
 	err := r.Run(fmt.Sprintf(":%s", cfg.Server.Port))
 	if err != nil {
-		log.Fatal(err)
+		logger.Fatal(logging.General, logging.Startup, err.Error(), nil)
 	}
 }
 
