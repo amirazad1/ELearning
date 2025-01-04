@@ -5,6 +5,7 @@ import (
 	"github.com/amirazad1/ELearning/config"
 	"github.com/amirazad1/ELearning/data/cache"
 	database "github.com/amirazad1/ELearning/data/db"
+	"github.com/amirazad1/ELearning/data/migration"
 	"github.com/amirazad1/ELearning/pkg/logging"
 )
 
@@ -25,6 +26,7 @@ func main() {
 	if err != nil {
 		logger.Fatal(logging.Postgres, logging.Startup, err.Error(), nil)
 	}
+	migration.Up1()
 
 	api.InitServer(cfg)
 }
