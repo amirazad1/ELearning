@@ -3,7 +3,7 @@ package api
 import (
 	"fmt"
 	"github.com/amirazad1/ELearning/api/middleware"
-	"github.com/amirazad1/ELearning/api/routers"
+	"github.com/amirazad1/ELearning/api/router"
 	"github.com/amirazad1/ELearning/api/validation"
 	"github.com/amirazad1/ELearning/config"
 	"github.com/amirazad1/ELearning/docs"
@@ -24,7 +24,7 @@ func InitServer(cfg *config.Config) {
 	r.Use(middleware.Cors(cfg))
 	r.Use(gin.Logger(), gin.Recovery(), middleware.LimitByRequest())
 
-	RegisterRoutes(r)
+	RegisterRoutes(r, cfg)
 	RegisterSwagger(r, cfg)
 
 	logger := logging.NewLogger(cfg)
@@ -35,11 +35,13 @@ func InitServer(cfg *config.Config) {
 	}
 }
 
-func RegisterRoutes(r *gin.Engine) {
+func RegisterRoutes(r *gin.Engine, cfg *config.Config) {
 	v1 := r.Group("/api/v1")
 	{
 		health := v1.Group("/health")
-		routers.Health(health)
+		users := v1.Group("/users")
+		router.Health(health)
+		router.User(users, cfg)
 	}
 }
 

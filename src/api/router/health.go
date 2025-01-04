@@ -1,12 +1,12 @@
-package routers
+package router
 
 import (
-	"github.com/amirazad1/ELearning/api/handlers"
+	"github.com/amirazad1/ELearning/api/handler"
 	"github.com/gin-gonic/gin"
 )
 
 func Health(r *gin.RouterGroup) {
-	handler := handlers.NewHealthHandler()
+	handler := handler.NewHealthHandler()
 
 	r.GET("/", handler.Health)
 	r.GET("/:id/:name", handler.HealthWithParam)

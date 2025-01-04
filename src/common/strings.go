@@ -1,9 +1,12 @@
 package common
 
 import (
+	"math"
 	"math/rand"
 	"regexp"
+	"strconv"
 	"strings"
+	"time"
 	"unicode"
 
 	"github.com/amirazad1/ELearning/config"
@@ -100,6 +103,16 @@ func GeneratePassword() string {
 		inRune[i], inRune[j] = inRune[j], inRune[i]
 	})
 	return string(inRune)
+}
+
+func GenerateOtp() string {
+	cfg := config.GetConfig()
+	rand.Seed(time.Now().UnixNano())
+	minValue := int(math.Pow(10, float64(cfg.Otp.Digits-1)))   // 10^d-1 100000
+	maxValue := int(math.Pow(10, float64(cfg.Otp.Digits)) - 1) // 999999 = 1000000 - 1 (10^d) -1
+
+	var num = rand.Intn(maxValue-minValue) + minValue
+	return strconv.Itoa(num)
 }
 
 func HasUpper(s string) bool {
