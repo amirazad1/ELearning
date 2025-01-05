@@ -29,9 +29,9 @@ func NewOtpService(cfg *config.Config) *OtpService {
 	return &OtpService{logger: logger, cfg: cfg, redisClient: redisClient}
 }
 
-func (u *OtpService) SendOtp(mobileNumber string) error {
+func (s *OtpService) SendOtp(mobileNumber string) error {
 	otp := common.GenerateOtp()
-	err := u.SetOtp(mobileNumber, otp)
+	err := s.SetOtp(mobileNumber, otp)
 	if err != nil {
 		return err
 	}

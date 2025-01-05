@@ -48,15 +48,15 @@ func Set[T any](c *redis.Client, key string, value T, duration time.Duration) er
 	return c.Set(key, v, duration).Err()
 }
 
-func Get[T any](c *redis.Client, key string) (*T, error) {
+func Get[T any](c *redis.Client, key string) (T, error) {
 	var dest T = *new(T)
 	v, err := c.Get(key).Result()
 	if err != nil {
-		return &dest, err
+		return dest, err
 	}
 	err = json.Unmarshal([]byte(v), &dest)
 	if err != nil {
-		return &dest, err
+		return dest, err
 	}
-	return &dest, nil
+	return dest, nil
 }

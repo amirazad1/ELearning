@@ -16,7 +16,11 @@ type UsersHandler struct {
 
 func NewUserHandler(cfg *config.Config) *UsersHandler {
 	userService := services.NewUserService(cfg)
-	return &UsersHandler{userService: userService}
+	otpService := services.NewOtpService(cfg)
+	return &UsersHandler{
+		userService: userService,
+		otpService:  otpService,
+	}
 }
 
 // SendOtp godoc
