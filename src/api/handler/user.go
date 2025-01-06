@@ -78,7 +78,6 @@ func (h *UsersHandler) RegisterByUsername(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusCreated, helper.GenerateBaseResponse(nil, true, 0))
-	N
 }
 
 // RegisterLoginByMobileNumber godoc
